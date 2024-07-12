@@ -9,12 +9,12 @@ import org.junit.jupiter.api.TestInstance;
 import java.util.concurrent.TimeUnit;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class AbbstractChannelTest {
+public class AbstractChannelTest {
     protected ManagedChannel channel;
 
     @BeforeAll
     public void setupChannel(){
-        this.channel = ManagedChannelBuilder.forAddress("localhost",6565)
+        this.channel = ManagedChannelBuilder.forAddress("localhost",6060)
                 .usePlaintext()
                 .build();
     }

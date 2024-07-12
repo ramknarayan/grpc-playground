@@ -26,8 +26,8 @@ public class GrpcServer {
         this.server = server;
     }
 
-    public static GrpcServer create(BankService... services){
-        return create(6565,services);
+    public static GrpcServer create(BindableService... services){
+        return create(6060,services);
     }
 
     public  static GrpcServer create (int port, BindableService... services){

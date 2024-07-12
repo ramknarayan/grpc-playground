@@ -10,14 +10,14 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Lec02UnaryAsyncClientTest extends AbstractTest{
+public class Lec02UnaryAsyncClientTest extends AbstractTest {
     private static final Logger log = LoggerFactory.getLogger(Lec02UnaryAsyncClientTest.class);
 
   @Test
   public void getBalanceTest(){
       var request = BalanceCheckRequest.newBuilder().setAccountNumber(1).build();
       var observer = ResponseObserver.<AccountBalance>create();
-      this.stub.getAccountBalance(request,observer);
+      this.bankStub.getAccountBalance(request,observer);
       observer.await();
       Assertions.assertEquals(1,observer.getItems().size());
       Assertions.assertEquals(100,observer.getItems().get(0).getBalance());
@@ -26,7 +26,7 @@ public class Lec02UnaryAsyncClientTest extends AbstractTest{
   @Test
     public void AllAccountTest(){
       var observer = ResponseObserver.<AllAccountsResponse>create();
-      this.stub.getAllAccount(Empty.getDefaultInstance(),observer);
+      this.bankStub.getAllAccount(Empty.getDefaultInstance(),observer);
       observer.await();
       Assertions.assertEquals(1,observer.getItems().size());
       Assertions.assertEquals(10,observer.getItems().get(0).getAccountsCount());
