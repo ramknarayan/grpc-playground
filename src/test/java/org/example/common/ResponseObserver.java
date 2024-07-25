@@ -42,7 +42,7 @@ public class ResponseObserver<T> implements StreamObserver<T> {
     public void onError(Throwable throwable) {
         log.info("Received error: {}",throwable.getMessage());
         this.throwable = throwable;
-
+        this.latch.countDown();
     }
 
     @Override

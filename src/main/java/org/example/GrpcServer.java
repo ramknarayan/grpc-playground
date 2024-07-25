@@ -3,6 +3,7 @@ package org.example;
 import io.grpc.*;
 import io.grpc.netty.shaded.io.grpc.netty.NettyServerBuilder;
 import org.example.sec06.BankService;
+import org.example.sec12.interceptors.GzipResponseInterceptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,16 +31,22 @@ public class GrpcServer {
         return create(6060,services);
     }
 
-    public  static GrpcServer create (int port, BindableService... services){
+
+    public static GrpcServer create(int port, BindableService... services){
         return create(port,builder ->{
            Arrays.asList(services).forEach(builder::addService);
         });
-    }
-    public static GrpcServer create(int port, Consumer<NettyServerBuilder> consumer){
-        var builder = ServerBuilder.forPort(port);
+        /*var builder = ServerBuilder.forPort(port);
         consumer.accept((NettyServerBuilder) builder);
+        return new GrpcServer(builder.build());*/
+    }
+    public static GrpcServer create(int port, Consumer<ServerBuilder> consumer){
+        var builder = ServerBuilder.forPort(port);
+        consumer.accept(builder);
         return new GrpcServer(builder.build());
     }
+
+
 
     public GrpcServer start(){
         var services = server.getServices()
